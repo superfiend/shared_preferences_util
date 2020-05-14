@@ -7,6 +7,12 @@ class SharedPreferencesUtil {
 
     SharedPreferencesUtil._(); // 构造函数私有化
 
+    static Future<bool> hasData(String key) async {
+        return SharedPreferences.getInstance().then((preferences) {
+            return preferences.containsKey(key);
+        });
+    }
+
     static Future<T> getData<T>(String key) async {
         return SharedPreferences.getInstance().then((preferences) {
             return preferences.get(key) as T;
@@ -31,6 +37,18 @@ class SharedPreferencesUtil {
                 default:
                     preferences.setStringList(key, value as List<String>);
             }
+        });
+    }
+
+    static Future<bool> delData(String key) async {
+        return SharedPreferences.getInstance().then((preferences) {
+            return preferences.remove(key);
+        });
+    }
+
+    static Future<bool> clear() async {
+        return SharedPreferences.getInstance().then((preferences) {
+            return preferences.clear();
         });
     }
 }
